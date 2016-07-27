@@ -1,7 +1,8 @@
+import org.apache.jackrabbit.commons.JcrUtils;
+
 import javax.jcr.GuestCredentials;
 import javax.jcr.Repository;
-import javax.jcr.Session; 
-import org.apache.jackrabbit.commons.JcrUtils;
+import javax.jcr.Session;
 
 /** 
 * First hop example. Logs in to a content repository and prints a 
@@ -24,7 +25,21 @@ public class FirstHop {
             System.out.println( 
             "Logged in as " + user + " to a " + name + " repository."); 
         } finally { 
-            session.logout(); 
-        } 
-    } 
+            session.logout();
+        }
+
+//        Repo is initialize when first session start | ----sess1----sess2----sess3-------------sessn----> and close when a last session end
+//        See on lock file!
+
+
+//        Session session1 = repository.login(new GuestCredentials());
+//        try {
+//            String user = session1.getUserID();
+//            String name = repository.getDescriptor(Repository.REP_NAME_DESC);
+//            System.out.println(
+//            "Logged in as " + user + " to a " + name + " repository.");
+//        } finally {
+//            session1.logout();
+//        }
+    }
 } 
