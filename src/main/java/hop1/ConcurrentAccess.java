@@ -1,3 +1,5 @@
+package hop1;
+
 import org.apache.jackrabbit.commons.JcrUtils;
 
 import javax.jcr.GuestCredentials;
