@@ -29,6 +29,13 @@ public class SecondHop {
             Node hello = root.addNode("hello");
             Node world = hello.addNode("world");
             world.setProperty("message", "Hello, World!");
+            world.setProperty("message1", "Hello, World!");
+            world.setProperty("message2", "Hello, World!");
+            world.setProperty("message3", "Hello, World!");
+            world.setProperty("message4", "Hello, World!");
+            world.setProperty("message5", "Hello, World!");
+            world.setProperty("message6", "Hello, World!");
+            world.setProperty("message7", "Hello, World!");
             session.save();
 
             // Retrieve content
@@ -37,8 +44,8 @@ public class SecondHop {
             System.out.println(node.getProperty("message").getString());
 
             // Remove content
-//            root.getNode("hello").remove();
-//            session.save();
+            root.getNode("hello").remove();
+            session.save();
         } finally {
             session.logout();
         }
