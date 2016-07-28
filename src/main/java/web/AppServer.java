@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
-public class SampleApp {
+public class AppServer {
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(SampleApp.class, args);
+		ApplicationContext ctx = SpringApplication.run( AppServer.class, args);
 		System.out.println(ctx.getDisplayName());
 
 		System.out.println("This is my first Spring Boot Example");
