@@ -50,6 +50,14 @@
             <version>1.3.6.RELEASE</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springmodules/spring-modules-jcr -->
+        <!--<dependency>-->
+            <!--<groupId>org.springmodules</groupId>-->
+            <!--<artifactId>spring-modules-jcr</artifactId>-->
+            <!--<version>0.7</version>-->
+        <!--</dependency>-->
+
+
     </dependencies>
 
 </project>
