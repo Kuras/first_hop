@@ -8,7 +8,6 @@ import spring.AdminJcr;
 
 @Configuration
 @ComponentScan("spring.*")
-//@ImportResource("classpath:dmsRepository.xml")
 @PropertySource("classpath:application.properties")
 public class JackRabbitRepository {
 

@@ -19,9 +19,7 @@ public class SampleController {
 
     @RequestMapping("/sample")
     public String sampleIt() throws RepositoryException {
-        adminJcr.context( new AdminJcr.Context() {
-            @Override
-            public void run( Session session ) throws RepositoryException {
+        adminJcr.context( session ->  {
                 Node root = session.getRootNode();
                 Node prop = root.addNode( "prop" );
                 prop.setProperty( "propertyName", new String[]{"First value", "Second value", "Third value"} );
@@ -30,8 +28,7 @@ public class SampleController {
                 Node node = root.getNode( "prop" );
                 System.out.println( node.getPath() );
                 System.out.println( Arrays.toString( node.getProperty( "propertyName" ).getValues() ) );
-            }
-        } );
+            });
 
         return "Hello! Welcome to Spring Boot Sample. ";
     }

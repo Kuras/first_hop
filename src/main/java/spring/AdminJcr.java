@@ -24,8 +24,4 @@ public class AdminJcr {
         }
     }
 
-
-    public abstract static class Context {
-        public abstract void run( Session session ) throws RepositoryException;
-    }
 }
