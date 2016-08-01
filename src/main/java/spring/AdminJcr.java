@@ -10,6 +10,7 @@ import javax.jcr.SimpleCredentials;
 
 @Component
 public class AdminJcr {
+
     public void context( Context context ) throws RepositoryException {
         Repository repository = JcrUtils.getRepository();
         Session session = null;
