@@ -1,10 +1,14 @@
 package web;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@ComponentScan("*")
 @ImportResource("classpath:dmsRepository.xml")
+@PropertySource("classpath:application.properties")
 public class JackRabbitRepository {
 //
 //    @Bean(name = "repository")
