@@ -1,6 +1,7 @@
 package spring;
 
 import org.apache.jackrabbit.commons.JcrUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.jcr.Repository;
@@ -13,6 +14,15 @@ public class OakRepository {
 
     private static OakRepository instance;
     private Repository repository;
+
+    /*
+   	 * credentials
+   	 */
+   	@Value("${loginAdminJcr}")
+   	private String loginAdminJcr;
+
+   	@Value("${passAdminJcr}")
+   	private String passAdminJcr;
 
     private OakRepository() throws RepositoryException {
         repository = JcrUtils.getRepository();
@@ -27,6 +37,22 @@ public class OakRepository {
     }
 
     public Session newAdminSession() throws RepositoryException {
-        return repository.login( new SimpleCredentials( "admin", "admin".toCharArray() ) );
+        return repository.login( new SimpleCredentials( loginAdminJcr, passAdminJcr.toCharArray() ) );
+    }
+
+    public String getLoginAdminJcr() {
+        return loginAdminJcr;
+    }
+
+    public void setLoginAdminJcr( String loginAdminJcr ) {
+        this.loginAdminJcr = loginAdminJcr;
+    }
+
+    public String getPassAdminJcr() {
+        return passAdminJcr;
+    }
+
+    public void setPassAdminJcr( String passAdminJcr ) {
+        this.passAdminJcr = passAdminJcr;
     }
 }
