@@ -7,7 +7,6 @@ import spring.AdminJcr;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
-import javax.jcr.Session;
 import java.util.Arrays;
 
 @RestController

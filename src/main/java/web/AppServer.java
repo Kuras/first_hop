@@ -12,7 +12,6 @@ public class AppServer {
 		System.out.println(ctx.getDisplayName());
 
 		System.out.println("This is my first Spring Boot Example");
-
 	}
 
 }

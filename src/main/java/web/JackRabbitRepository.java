@@ -1,6 +1,5 @@
 package web;
 
-import org.apache.jackrabbit.commons.JcrUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 import spring.AdminJcr;
 import spring.OakRepository;
 
-import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 
 @Configuration
