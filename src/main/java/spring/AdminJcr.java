@@ -10,12 +10,12 @@ import javax.jcr.Session;
 public class AdminJcr {
 
     @Autowired
-    OakRepository oakRepository;
+    JackRabbitRepository jackRabbitRepository;
 
     public void context( Context context ) throws RepositoryException {
         Session session = null;
         try {
-            session = oakRepository.newAdminSession();
+            session = jackRabbitRepository.newAdminSession();
             context.run( session );
         } finally {
             if ( session != null ) {

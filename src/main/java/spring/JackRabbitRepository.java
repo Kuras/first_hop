@@ -15,7 +15,7 @@ import javax.jcr.SimpleCredentials;
 @Getter
 @Setter
 @Component
-public class OakRepository {
+public class JackRabbitRepository {
 
     private Repository repository;
     // admin credentials
