@@ -1,9 +1,10 @@
 package spring;
 
-import org.apache.jackrabbit.commons.JcrUtils;
+import org.apache.jackrabbit.core.TransientRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -12,29 +13,28 @@ import javax.jcr.SimpleCredentials;
 @Component
 public class OakRepository {
 
-    private static OakRepository instance;
     private Repository repository;
 
     /*
-   	 * credentials
+        * credentials
    	 */
-   	@Value("${loginAdminJcr}")
-   	private String loginAdminJcr;
+    @Value("${loginAdminJcr}")
+    private String loginAdminJcr;
+    @Value("${passAdminJcr}")
+    private String passAdminJcr;
+    /**
+     * jcr config
+     */
+    @Value("${configJcr}")
+    private String configJcr;
+    @Value("${homeJcr}")
+    private String homeJcr;
 
-   	@Value("${passAdminJcr}")
-   	private String passAdminJcr;
-
-    private OakRepository() throws RepositoryException {
-        repository = JcrUtils.getRepository();
+    @PostConstruct
+    public void init() {
+        repository = new TransientRepository( configJcr, homeJcr );
     }
 
-    public static OakRepository getInstance() throws RepositoryException {
-        if ( instance == null ) {
-            instance = new OakRepository();
-            return instance;
-        }
-        return instance;
-    }
 
     public Session newAdminSession() throws RepositoryException {
         return repository.login( new SimpleCredentials( loginAdminJcr, passAdminJcr.toCharArray() ) );
@@ -54,5 +54,21 @@ public class OakRepository {
 
     public void setPassAdminJcr( String passAdminJcr ) {
         this.passAdminJcr = passAdminJcr;
+    }
+
+    public String getConfigJcr() {
+        return configJcr;
+    }
+
+    public void setConfigJcr( String configJcr ) {
+        this.configJcr = configJcr;
+    }
+
+    public String getHomeJcr() {
+        return homeJcr;
+    }
+
+    public void setHomeJcr( String homeJcr ) {
+        this.homeJcr = homeJcr;
     }
 }

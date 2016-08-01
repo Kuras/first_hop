@@ -23,7 +23,7 @@ public class JackRabbitRepository {
 
     @Bean(name = "oakRepository")
     public OakRepository oakRepository() throws RepositoryException {
-        return OakRepository.getInstance();
+        return new OakRepository();
     }
 
 }
