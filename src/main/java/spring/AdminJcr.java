@@ -12,12 +12,12 @@ import javax.jcr.SimpleCredentials;
 public class AdminJcr {
 
     @Autowired
-    Repository oak;
+    OakRepository oakRepository;
 
     public void context( Context context ) throws RepositoryException {
         Session session = null;
         try {
-            session = oak.login( new SimpleCredentials( "admin", "admin".toCharArray() ) );
+            session = oakRepository.newAdminSession();
             context.run( session );
         } finally {
             if ( session != null ) {

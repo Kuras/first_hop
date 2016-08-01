@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import spring.AdminJcr;
+import spring.OakRepository;
 
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
@@ -20,9 +21,9 @@ public class JackRabbitRepository {
         return new AdminJcr();
     }
 
-    @Bean(name = "oak")
-    public Repository repository() throws RepositoryException {
-        return JcrUtils.getRepository();
+    @Bean(name = "oakRepository")
+    public OakRepository oakRepository() throws RepositoryException {
+        return OakRepository.getInstance();
     }
 
 }
