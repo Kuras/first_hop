@@ -1,10 +1,14 @@
 package web;
 
+import org.apache.jackrabbit.commons.JcrUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import spring.AdminJcr;
+
+import javax.jcr.Repository;
+import javax.jcr.RepositoryException;
 
 @Configuration
 @ComponentScan("spring.*")
@@ -16,17 +20,9 @@ public class JackRabbitRepository {
         return new AdminJcr();
     }
 
-//    @Bean(name = "jcrSessionFactory")
-//    public JcrSessionFactory getJcrSessionFactory() {
-//        JcrSessionFactory sessionFactory  = new JcrSessionFactory();
-//        return sessionFactory;
-//    }
-//
-//    @Bean(name = "jcrTemplate")
-//    public JcrTemplate getJcrTemplate() {
-//        JcrTemplate jcrTemplate  = new JcrTemplate();
-//        return jcrTemplate;
-//    }
-
+    @Bean(name = "oak")
+    public Repository repository() throws RepositoryException {
+        return JcrUtils.getRepository();
+    }
 
 }

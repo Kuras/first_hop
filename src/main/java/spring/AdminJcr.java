@@ -1,21 +1,23 @@
 package spring;
 
-import org.apache.jackrabbit.commons.JcrUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 
-@Component
+@Service
 public class AdminJcr {
 
+    @Autowired
+    Repository oak;
+
     public void context( Context context ) throws RepositoryException {
-        Repository repository = JcrUtils.getRepository();
         Session session = null;
         try {
-            session = repository.login( new SimpleCredentials( "admin", "admin".toCharArray() ) );
+            session = oak.login( new SimpleCredentials( "admin", "admin".toCharArray() ) );
             context.run( session );
         } finally {
             if ( session != null ) {
