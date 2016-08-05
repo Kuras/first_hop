@@ -72,8 +72,20 @@ public class SampleController {
     public String recurrence() throws RepositoryException {
         return adminJcr.context(session -> {
             Node root = session.getRootNode();
-            return root.getPath();
+            StringBuilder sb = new StringBuilder(  );
+            printTree(sb,root);
+
+            return sb.toString();
         });
+    }
+
+    private void printTree( StringBuilder sb, Node node ) throws RepositoryException {
+        sb.append( "/n" );
+        if (!node.hasNodes()){
+            sb.append( node.getPath().toString() + node.getName().toString() );
+        } else {
+            printTree( sb, node.getNodes().nextNode() );
+        }
     }
 
     private String getResource() throws RepositoryException {
