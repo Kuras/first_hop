@@ -6,6 +6,7 @@ import javax.jcr.Session;
 /*
 * Functional Interface
 * */
-public interface Context {
-    public void run( Session session ) throws RepositoryException;
+@FunctionalInterface
+public interface Context<T> {
+    public T run( Session session ) throws RepositoryException;
 }

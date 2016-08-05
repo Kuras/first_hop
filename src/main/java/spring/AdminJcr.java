@@ -12,11 +12,11 @@ public class AdminJcr {
     @Autowired
     JackRabbitRepository jackRabbitRepository;
 
-    public void context( Context context ) throws RepositoryException {
+    public <T> T context( Context<T> context ) throws RepositoryException {
         Session session = null;
         try {
             session = jackRabbitRepository.newAdminSession();
-            context.run( session );
+            return context.run( session );
         } finally {
             if ( session != null ) {
                 session.logout();
