@@ -68,6 +68,14 @@ public class SampleController {
         return "Hello! Cuncurretn test. ";
     }
 
+    @RequestMapping("/recurrence")
+    public String recurrence() throws RepositoryException {
+        return adminJcr.context(session -> {
+            Node root = session.getRootNode();
+            return root.getPath();
+        });
+    }
+
     private String getResource() throws RepositoryException {
 //      Run in new thread for different session (thread-safe)
         return adminJcr.context( session -> {
