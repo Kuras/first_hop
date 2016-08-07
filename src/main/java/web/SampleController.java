@@ -26,13 +26,13 @@ public class SampleController {
     public String sampleIt() throws RepositoryException {
         adminJcr.context(session -> {
             Node root = session.getRootNode();
-            Node prop = root.addNode("prop");
-            prop.setProperty("propertyName", new String[]{"First value", "Second value", "Third value"});
+            Node perla = root.addNode("perla");
+            perla.setProperty("propertyPerlaName", new String[]{"First value", "Second value", "Third value"});
             session.save();
 
-            Node node = root.getNode("prop");
+            Node node = root.getNode("perla");
             System.out.println(node.getPath());
-            System.out.println(Arrays.toString(node.getProperty("propertyName").getValues()));
+            System.out.println(Arrays.toString(node.getProperty("propertyPerlaName").getValues()));
             return Optional.empty();
         });
 
@@ -73,6 +73,7 @@ public class SampleController {
         return adminJcr.context(session -> {
             Node root = session.getRootNode();
             StringBuilder sb = new StringBuilder(  );
+
             printTree(sb,root);
 
             return sb.toString();
@@ -80,11 +81,14 @@ public class SampleController {
     }
 
     private void printTree( StringBuilder sb, Node node ) throws RepositoryException {
-        sb.append( "/n" );
         if (!node.hasNodes()){
-            sb.append( node.getPath().toString() + node.getName().toString() );
+            sb.append( node.getPath().toString() );
+            sb.append( "<br>" );
         } else {
-            printTree( sb, node.getNodes().nextNode() );
+            NodeIterator i$ = node.getNodes();
+            while (i$.hasNext()){
+                printTree(sb,i$.nextNode());
+            }
         }
     }
 
