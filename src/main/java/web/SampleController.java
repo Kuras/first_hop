@@ -24,17 +24,17 @@ public class SampleController {
 
     @RequestMapping("/sample")
     public String sampleIt() throws RepositoryException {
-        adminJcr.context(session -> {
+        adminJcr.context( session -> {
             Node root = session.getRootNode();
-            Node perla = root.addNode("perla");
-            perla.setProperty("propertyPerlaName", new String[]{"First value", "Second value", "Third value"});
+            Node perla = root.addNode( "perla" );
+            perla.setProperty( "propertyPerlaName", new String[]{"First value", "Second value", "Third value"} );
             session.save();
 
-            Node node = root.getNode("perla");
-            System.out.println(node.getPath());
-            System.out.println(Arrays.toString(node.getProperty("propertyPerlaName").getValues()));
+            Node node = root.getNode( "perla" );
+            System.out.println( node.getPath() );
+            System.out.println( Arrays.toString( node.getProperty( "propertyPerlaName" ).getValues() ) );
             return Optional.empty();
-        });
+        } );
 
         return "Hello! Welcome to Spring Boot Sample. ";
     }
@@ -51,18 +51,18 @@ public class SampleController {
                 () -> getResource(),
                 () -> getResource(),
                 () -> getResource(),
-                () -> getResource());
+                () -> getResource() );
 
-        executor.invokeAll(callables)
+        executor.invokeAll( callables )
                 .stream()
-                .map(future -> {
+                .map( future -> {
                     try {
                         return future.get();
-                    } catch (Exception e) {
-                        throw new IllegalStateException(e);
+                    } catch ( Exception e ) {
+                        throw new IllegalStateException( e );
                     }
-                })
-                .forEach(System.out::println);
+                } )
+                .forEach( System.out::println );
 
 
         return "Hello! Cuncurretn test. ";
@@ -70,24 +70,25 @@ public class SampleController {
 
     @RequestMapping("/recurrence")
     public String recurrence() throws RepositoryException {
-        return adminJcr.context(session -> {
+        return adminJcr.context( session -> {
             Node root = session.getRootNode();
-            StringBuilder sb = new StringBuilder(  );
+            StringBuilder sb = new StringBuilder();
+            sb.append( "/" + "<br>" );
 
-            printTree(sb,root);
+            printTree( sb, root );
 
             return sb.toString();
-        });
+        } );
     }
 
     private void printTree( StringBuilder sb, Node node ) throws RepositoryException {
-        if (!node.hasNodes()){
+        if ( !node.hasNodes() ) {
             sb.append( node.getPath().toString() );
             sb.append( "<br>" );
         } else {
             NodeIterator i$ = node.getNodes();
-            while (i$.hasNext()){
-                printTree(sb,i$.nextNode());
+            while ( i$.hasNext() ) {
+                printTree( sb, i$.nextNode() );
             }
         }
     }
