@@ -2,7 +2,6 @@ package web;
 
 import hop1.CreateProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import spring.AdminJcr;
@@ -75,7 +74,8 @@ public class SampleController {
             StringBuilder sb = new StringBuilder();
             sb.append( "/" + "<br>" );
 
-            printTree( sb, root );
+//            printTree( sb, root );
+            sb.append( printTree1( root ) );
 
             return sb.toString();
         } );
@@ -90,6 +90,23 @@ public class SampleController {
             while ( i$.hasNext() ) {
                 printTree( sb, i$.nextNode() );
             }
+        }
+    }
+
+    private String printTree1( Node node ) throws RepositoryException {
+        NodeIterator i$ = node.getNodes();
+        if ( !i$.hasNext() ) {
+            return node.getPath().toString() + "<br>";
+        } else {
+            while ( i$.hasNext() ){
+                return printTree1 (i$.nextNode());
+                // multiple return point => hard to perform tail call!
+                // return printTree1 (node_1);
+                // return printTree1 (node_2);
+                // return printTree1 (node_3);
+                // return printTree1 (node_4);
+            }
+            return "<br>";
         }
     }
 
