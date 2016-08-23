@@ -1,6 +1,6 @@
 package tail_call;
 
-import java.util.stream.Streams;
+import java.util.stream.Stream;
 /**
  * Class description goes here.
  * @author  : PK
@@ -27,16 +27,16 @@ public class Sample {
   }
 
   public static void main(String[] args) throws Exception {
-    int max = Integer.parseInt(args[0]);
+    int max = 25;
 
-    Streams.iterate(1, number -> number + 1)
+    Stream.iterate(1, number -> number + 1)
     .map(number -> number * number)
-    .limit(25)
+    .limit(max)
     .forEach(number -> System.out.print(number + " "));
 
-    System.out.println("=================================");
+    System.out.println("");
 
-    Streams.iterate(squareAndPrint(1, max), TailCall::get)
+    Stream.iterate(squareAndPrint(1, max), TailCall::get)
     .filter(TailCall::terminated)
     .findFirst();
   }
