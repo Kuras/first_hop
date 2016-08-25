@@ -17,6 +17,24 @@ class TailCallTerminate implements TailCall {
 }
 
 public class Sample {
+  /*
+    In scala we have sure annotation that indicate if we have tail call recursive function:
+
+    =-= @tailrec =-=
+
+    In scala code looks like:
+    class Sample {
+      def square(n: Int): Int = {
+        @tailrec def squareAndPrint(number: Int, max: Int): Int = {
+          println(number * number)
+
+          if (max > number) squareAndPrint(number + 1, max)
+          else 0
+        }
+        squareAndPrint(1, 25)
+      }
+    }
+   */
   public static TailCall squareAndPrint(int number, int max) {
     System.out.println(number * number);
     if(max > number) {
