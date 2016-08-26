@@ -13,8 +13,8 @@ public class CombineObservableSubscriber {
         Observable<String> myObservable = Observable.create(
                 new Observable.OnSubscribe<String>() {
                     @Override
-                    public void call( Subscriber<? super String> sub ) {
-                        sub.onNext( "Emits string" );
+                    public void call(Subscriber<? super String> sub) {
+                        sub.onNext("Emits string");
                         sub.onCompleted();
                     }
                 }
@@ -22,23 +22,23 @@ public class CombineObservableSubscriber {
 
         Subscriber<String> mySubscriber = new Subscriber<String>() {
             @Override
-            public void onNext( String s ) {
-                System.out.println( s );
+            public void onNext(String s) {
+                System.out.println(s);
             }
 
             @Override
             public void onCompleted() {
-                System.out.println( "Completed!" );
+                System.out.println("Completed!");
             }
 
             @Override
-            public void onError( Throwable e ) {
-                System.out.println( "Error!" );
+            public void onError(Throwable e) {
+                System.out.println("Error!");
             }
         };//Subscriber to consume the data
 
         //hook them up
-        myObservable.subscribe( mySubscriber );
+        myObservable.subscribe(mySubscriber);
     }
 
     // simpler one
@@ -50,7 +50,7 @@ public class CombineObservableSubscriber {
 
         // simple version emit one item!
         Observable<String> myObservable =
-            Observable.just("Emits string");
+                Observable.just("Emits string");
 
         Action1<String> onNextAction = new Action1<String>() {
             @Override
@@ -61,6 +61,27 @@ public class CombineObservableSubscriber {
 
 //        myObservable.subscribe(onNextAction, onErrorAction, onCompleteAction);
         myObservable.subscribe(onNextAction);
+    }
+
+    // simpler one
+    public void combine2() {
+        Observable<String> myObservable =
+                Observable.just("Emits string");
+
+        myObservable.subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                System.out.println(s);
+            }
+        });
+    }
+
+    // simpler one
+    public void combine3() {
+        Observable<String> myObservable =
+                Observable.just("Emits string");
+
+        myObservable.subscribe(s->System.out.println(s));
     }
 
 }
