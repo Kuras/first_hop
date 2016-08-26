@@ -46,14 +46,9 @@ public class SampleController {
 
     @RequestMapping("/rxJavaC")
     public void sampleRxC() {
-//        Blocks of reactive code are Observables and Subscribers
-//        Observable emits items; a Subscriber consumes those items.
-//        An Observable may emit any number of items -- infinity --
-//        An Observable lazy emitting!!!  ->
-        Observable.just("Observable!")
-            .subscribe( System.out::println );
 
         combineObservableSubscriber.combine();
+        combineObservableSubscriber.combine1();
 
         RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject( "http://localhost:8111/rxJavaS", String.class );
