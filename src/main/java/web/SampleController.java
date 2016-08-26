@@ -4,7 +4,10 @@ import hop1.CreateProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import rx.Observable;
 import spring.AdminJcr;
+import spring.CombineObservableSubscriber;
 
 import javax.jcr.*;
 import java.util.Arrays;
@@ -19,6 +22,9 @@ public class SampleController {
 
     @Autowired
     AdminJcr adminJcr;
+
+    @Autowired
+    CombineObservableSubscriber combineObservableSubscriber;
 
 
     @RequestMapping("/sample")
@@ -36,6 +42,39 @@ public class SampleController {
         } );
 
         return "Hello! Welcome to Spring Boot Sample. ";
+    }
+
+    @RequestMapping("/rxJavaC")
+    public void sampleRxC() {
+//        Blocks of reactive code are Observables and Subscribers
+//        Observable emits items; a Subscriber consumes those items.
+//        An Observable may emit any number of items -- infinity --
+//        An Observable lazy emitting!!!  ->
+        Observable.just("Observable!")
+            .subscribe( System.out::println );
+
+        combineObservableSubscriber.combine();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String quote = restTemplate.getForObject( "http://localhost:8111/rxJavaS", String.class );
+        System.out.println( quote );
+    }
+
+    @RequestMapping("/rxJavaS")
+    public String sampleRxS() throws RepositoryException {
+        adminJcr.context( session -> {
+            Node root = session.getRootNode();
+            Node perla = root.addNode( "perla" );
+            perla.setProperty( "propertyPerlaName", new String[]{"First value", "Second value", "Third value"} );
+            session.save();
+
+            Node node = root.getNode( "perla" );
+            System.out.println( node.getPath() );
+            System.out.println( Arrays.toString( node.getProperty( "propertyPerlaName" ).getValues() ) );
+            return Optional.empty();
+        } );
+
+        return "Thread name:  " + Thread.currentThread().getName();
     }
 
     @RequestMapping("/concurrent")
@@ -98,8 +137,8 @@ public class SampleController {
         if ( !i$.hasNext() ) {
             return node.getPath().toString() + "<br>";
         } else {
-            while ( i$.hasNext() ){
-                return printTree1 (i$.nextNode());
+            while ( i$.hasNext() ) {
+                return printTree1( i$.nextNode() );
                 // multiple return point => hard to perform tail call!
                 // return printTree1 (node_1);
                 // return printTree1 (node_2);

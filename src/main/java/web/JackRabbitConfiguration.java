@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import spring.AdminJcr;
+import spring.CombineObservableSubscriber;
 import spring.JackRabbitRepository;
 
 import javax.jcr.RepositoryException;
@@ -22,6 +23,11 @@ public class JackRabbitConfiguration {
     @Bean(name = "jackRabbitRepository")
     public JackRabbitRepository jackRabbitRepository() throws RepositoryException {
         return new JackRabbitRepository();
+    }
+
+    @Bean(name = "combineObservableSubscriber")
+    public CombineObservableSubscriber combineObservableSubscriber() {
+        return new CombineObservableSubscriber();
     }
 
 }
