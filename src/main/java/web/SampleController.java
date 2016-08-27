@@ -51,6 +51,12 @@ public class SampleController {
         combineObservableSubscriber.combine1();
         combineObservableSubscriber.combine2();
         combineObservableSubscriber.combine3();
+        combineObservableSubscriber.transform();
+        combineObservableSubscriber.transform1();
+
+        combineObservableSubscriber.searchUrl();
+        combineObservableSubscriber.searchUrl1();
+        combineObservableSubscriber.searchUrl2();
 
         RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject( "http://localhost:8111/rxJavaS", String.class );

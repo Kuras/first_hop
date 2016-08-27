@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
+import rx.functions.Func1;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CombineObservableSubscriber {
@@ -81,7 +85,65 @@ public class CombineObservableSubscriber {
         Observable<String> myObservable =
                 Observable.just("Emits string");
 
-        myObservable.subscribe(s->System.out.println(s));
+        myObservable.subscribe(s -> System.out.println(s));
     }
 
+    //  Subscribers are supposed to be the thing that reacts, not the thing that mutates.
+    public void transform() {
+
+        Observable.just("Emits string")
+                .map(s -> s + " - and transform")
+                .subscribe(s -> System.out.println(s));
+    }
+
+    public void transform1() {
+
+        Observable.just("Emits string")
+                .map(s -> s + " - and transform")
+                .map(s -> s.hashCode())
+                .map(i -> Integer.toString(i))
+                .subscribe(s -> System.out.println(s));
+    }
+
+//  Key idea #1: Observable and Subscriber can do anything.
+    /*
+    Observable : {database query, click, stream of bytes read from the internet, }
+    Subscriber : {displaying on the screen, click reacting, write it to the disk, }
+    * */
+
+//    We can model almost every system
+
+    private Observable<List<String>> query(String text) {
+        List<String> list = Arrays.asList(new String[]{"url1", "url2", "url3"});
+        List<String> list2 = Arrays.asList(new String[]{"url21", "url22", "url23"});
+        return Observable.just(list, list2);
+    }
+
+
+    private Observable<String> query1(String text) {
+        return Observable.from(new String[]{"url1", "url2", "url3"});
+    }
+
+    public void searchUrl() {
+
+        query("Wis").subscribe(urls -> {
+            for (String url : urls) {
+                System.out.println(url);
+            }
+        });
+    }
+
+    //I've gotten rid of the for-each loop, but the resulting code is a mess.
+    public void searchUrl1() {
+        query("Wis").subscribe(urls -> {
+            Observable.from(urls).
+                    subscribe(u -> System.out.println(u));
+        });
+    }
+
+    public void searchUrl2() {
+        query("Wis")
+                .flatMap(urls -> Observable.from(urls))
+                .subscribe(u -> System.out.println(u));
+    }
 }
