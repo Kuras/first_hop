@@ -58,6 +58,8 @@ public class SampleController {
         combineObservableSubscriber.searchUrl1();
         combineObservableSubscriber.searchUrl2();
 
+        combineObservableSubscriber.errorHandling();
+
         RestTemplate restTemplate = new RestTemplate();
         String quote = restTemplate.getForObject( "http://localhost:8111/rxJavaS", String.class );
         System.out.println( quote );

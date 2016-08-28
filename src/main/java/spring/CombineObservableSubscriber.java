@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 import java.util.Arrays;
 import java.util.List;
@@ -145,5 +144,50 @@ public class CombineObservableSubscriber {
         query("Wis")
                 .flatMap(urls -> Observable.from(urls))
                 .subscribe(u -> System.out.println(u));
+    }
+
+    // one place to handle error
+    public void errorHandling() {
+        query("Wis")
+                .flatMap(urls -> Observable.from(urls))
+                .map(s -> potentialException(s))
+                .map(s -> anotherPotentialException(s))
+                .subscribe(new Subscriber<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("completed!");
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        System.out.println("error! ---> " + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Object s) {
+                        System.out.println(s);
+                    }
+                });
+    }
+
+    //potentially throws exception
+    private String anotherPotentialException(String s) throws RXException {
+//        if (s.equals("url22")) {
+//            throw new RXException( new Exception("exception from operator") );
+//        }
+        return s;
+    }
+
+    private String potentialException(String s) throws RXException {
+//        if ( s.equals("url23")) {
+//            throw new RXException( new Exception("exception from operator") );
+//        }
+        return s;
+    }
+
+    private static class RXException extends RuntimeException {
+        public RXException(Exception throwable) {
+            super(throwable);
+        }
     }
 }
