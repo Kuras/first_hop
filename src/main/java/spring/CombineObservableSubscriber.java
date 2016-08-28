@@ -148,6 +148,7 @@ public class CombineObservableSubscriber {
 
     // one place to handle error
     public void errorHandling() {
+        //I find this pattern a lot easier than traditional error handling.
         query("Wis")
                 .flatMap(urls -> Observable.from(urls))
                 .map(s -> potentialException(s))
@@ -168,6 +169,19 @@ public class CombineObservableSubscriber {
                         System.out.println(s);
                     }
                 });
+    }
+
+    public void errorHandling1() {
+        //I find this pattern a lot easier than traditional error handling.
+        query("Wis")
+                .flatMap(urls -> Observable.from(urls))
+                .map(s -> potentialException(s))
+                .map(s -> anotherPotentialException(s))
+                .subscribe(
+                        next -> System.out.println(next),
+                        e -> System.out.println("error! ---> " + e.getMessage()),
+                        () -> System.out.println("completed!")
+                );
     }
 
     //potentially throws exception
