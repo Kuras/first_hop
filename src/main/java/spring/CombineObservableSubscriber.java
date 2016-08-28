@@ -2,12 +2,14 @@ package spring;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class CombineObservableSubscriber {
@@ -203,5 +205,25 @@ public class CombineObservableSubscriber {
         public RXException(Exception throwable) {
             super(throwable);
         }
+    }
+
+    public void _1ooCalls() {
+        Object[] array = Stream.iterate(0, n -> n + 1)
+                .map(i -> i)
+                .limit(100)
+                .toArray();
+
+        Observable.from(Arrays.asList(new int[]{1, 2, 3}))
+                .map(s -> restCall())
+                .subscribe(
+                        next -> System.out.println(next),
+                        e -> System.out.println("error! ---> " + e.getMessage()),
+                        () -> System.out.println("completed!")
+                );
+    }
+
+    private String restCall() {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject("http://localhost:8111/rxJavaS", String.class);
     }
 }

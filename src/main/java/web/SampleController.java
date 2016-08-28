@@ -47,22 +47,24 @@ public class SampleController {
     @RequestMapping("/rxJavaC")
     public void sampleRxC() {
 
-        combineObservableSubscriber.combine();
-        combineObservableSubscriber.combine1();
-        combineObservableSubscriber.combine2();
-        combineObservableSubscriber.combine3();
-        combineObservableSubscriber.transform();
-        combineObservableSubscriber.transform1();
+//        combineObservableSubscriber.combine();
+//        combineObservableSubscriber.combine1();
+//        combineObservableSubscriber.combine2();
+//        combineObservableSubscriber.combine3();
+//        combineObservableSubscriber.transform();
+//        combineObservableSubscriber.transform1();
+//
+//        combineObservableSubscriber.searchUrl();
+//        combineObservableSubscriber.searchUrl1();
+//        combineObservableSubscriber.searchUrl2();
+//
+//        combineObservableSubscriber.errorHandling();
 
-        combineObservableSubscriber.searchUrl();
-        combineObservableSubscriber.searchUrl1();
-        combineObservableSubscriber.searchUrl2();
+        combineObservableSubscriber._1ooCalls();
 
-        combineObservableSubscriber.errorHandling();
-
-        RestTemplate restTemplate = new RestTemplate();
-        String quote = restTemplate.getForObject( "http://localhost:8111/rxJavaS", String.class );
-        System.out.println( quote );
+//        RestTemplate restTemplate = new RestTemplate();
+//        String quote = restTemplate.getForObject( "http://localhost:8111/rxJavaS", String.class );
+//        System.out.println( quote );
     }
 
     @RequestMapping("/rxJavaS")
